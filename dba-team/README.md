@@ -70,25 +70,23 @@ http://localhost:8080
 | 🔔 告警中心 | 告警列表、已读标记 |
 | ⚙️ 系统配置 | 通知渠道、数据库连接、自动化设置 |
 
-## 安装
+## 快速开始
 
-### 方式1：通过ClawHub安装（推荐）
+### 1. 安装Skill
 
 ```bash
+# ClawHub安装（推荐）
 clawhub install dba-team
-```
 
-### 方式2：Git克隆
-
-```bash
+# 或Git克隆
 git clone https://github.com/pc-study/dba-multi-ai-system.git
 cp -r dba-team ~/.openclaw/skills/
 ```
 
-### 启动Web界面
+### 2. 启动Web界面（可选）
 
 ```bash
-cd dba-team/web
+cd ~/.openclaw/skills/dba-team/web
 python -m http.server 8080
 # 访问 http://localhost:8080
 ```
