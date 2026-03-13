@@ -63,17 +63,19 @@ DBA总监 (主Agent)
 
 ## 安装
 
-### 方式1：符号链接（推荐开发用）
+### 方式1：ClawHub安装（推荐 ✅）
 
 ```bash
-# 克隆仓库
-git clone https://github.com/pc-study/dba-multi-ai-system.git
+# 安装
+clawhub install dba-team
 
-# 创建符号链接
-ln -s dba-team ~/.npm-global/lib/node_modules/openclaw/skills/dba-team
+# 更新
+clawhub update dba-team
 ```
 
-### 方式2：直接复制
+> 需要先登录: `clawhub login`
+
+### 方式2：Git克隆
 
 ```bash
 # 克隆仓库
@@ -81,6 +83,16 @@ git clone https://github.com/pc-study/dba-multi-ai-system.git
 
 # 复制到OpenClaw skills目录
 cp -r dba-team ~/.npm-global/lib/node_modules/openclaw/skills/
+```
+
+### 方式3：符号链接（开发用）
+
+```bash
+# 克隆仓库
+git clone https://github.com/pc-study/dba-multi-ai-system.git
+
+# 创建符号链接
+ln -s dba-team ~/.npm-global/lib/node_modules/openclaw/skills/dba-team
 ```
 
 ## 使用方式
