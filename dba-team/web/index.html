@@ -26,6 +26,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .btn-outline:hover{border-color:var(--primary);color:var(--primary)}
 .btn-danger{background:var(--danger);color:#fff}
 .btn-sm{padding:6px 12px;font-size:13px}
+.btn-xs{padding:4px 8px;font-size:12px}
 .page{padding:30px;display:none}
 .page.active{display:block}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-bottom:30px}
@@ -36,36 +37,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .card-header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
 .card-title{font-size:16px;font-weight:600}
 .card-body{padding:24px}
-.db-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
-.db-card{background:var(--white);border-radius:12px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.05);transition:0.3s;border:2px solid transparent}
-.db-card:hover{border-color:var(--primary);transform:translateY(-2px)}
 .badge{padding:4px 10px;border-radius:20px;font-size:12px;display:inline-block;font-weight:500}
 .badge.success{background:#dcfce7;color:#166534}
 .badge.warning{background:#fef3c7;color:#92400e}
 .badge.danger{background:#fee2e2;color:#991b1b}
 .badge.info{background:#dbeafe;color:#1e40af}
-.db-header{display:flex;align-items:center;gap:15px;margin-bottom:15px}
-.db-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px}
-.db-icon.oracle{background:#fff7ed}
-.db-icon.mysql{background:#eff6ff}
-.db-icon.pg{background:#f5f3ff}
-.db-icon.redis{background:#fef2f2}
-.db-icon.tidb{background:#e0e7ff}
-.db-icon.ob{background:#ecfdf5}
-.db-name{font-size:16px;font-weight:600;margin-bottom:4px}
-.db-version{font-size:13px;color:var(--text-lighter)}
-.db-metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:15px 0;padding:15px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.metric{text-align:center}
-.metric-value{font-size:18px;font-weight:600}
-.metric-label{font-size:12px;color:var(--text-lighter)}
-.progress-wrap{margin:15px 0}
-.progress-label{display:flex;justify-content:space-between;margin-bottom:8px;font-size:13px}
-.progress{height:8px;background:var(--bg);border-radius:4px;overflow:hidden}
-.progress-bar{height:100%;border-radius:4px;transition:0.3s}
-.progress-bar.green{background:var(--success)}
-.progress-bar.yellow{background:var(--warning)}
-.progress-bar.red{background:var(--danger)}
-.db-actions{display:flex;gap:8px}
 .chat-container{height:calc(100vh-180px);background:var(--white);border-radius:12px;display:flex;flex-direction:column;overflow:hidden}
 .chat-messages{flex:1;overflow-y:auto;padding:20px}
 .message{display:flex;gap:12px;margin-bottom:20px;animation:fadeIn 0.3s ease}
@@ -114,7 +90,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .table tr:hover{background:#fafafa}
 .modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;z-index:1000}
 .modal.show{display:flex}
-.modal-content{background:var(--white);border-radius:16px;padding:30px;width:500px;max-width:95%;max-height:90vh;overflow-y:auto}
+.modal-content{background:var(--white);border-radius:16px;padding:30px;width:600px;max-width:95%;max-height:90vh;overflow-y:auto}
 .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
 .modal-title{font-size:20px;font-weight:600}
 .modal-close{background:none;border:none;font-size:28px;cursor:pointer;color:var(--text-lighter)}
@@ -129,6 +105,26 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .quick-action-icon{font-size:32px;margin-bottom:12px}
 .quick-action-text{font-size:14px;color:var(--text-light)}
 .loading{text-align:center;padding:40px;color:var(--text-lighter)}
+.db-table{width:100%}
+.db-table th{text-align:left;padding:16px;background:var(--bg);font-size:13px;font-weight:600;color:var(--text-lighter);border-bottom:2px solid var(--border)}
+.db-table td{padding:16px;border-bottom:1px solid var(--border);vertical-align:middle}
+.db-table tr:hover{background:#fafafa}
+.db-name-cell{display:flex;align-items:center;gap:12px}
+.db-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.db-icon.oracle{background:#fff7ed}
+.db-icon.mysql{background:#eff6ff}
+.db-icon.pg{background:#f5f3ff}
+.db-icon.redis{background:#fef2f2}
+.db-icon.tidb{background:#e0e7ff}
+.db-icon.ob{background:#ecfdf5}
+.db-name-text{font-weight:600;font-size:15px}
+.db-version-text{font-size:12px;color:var(--text-lighter)}
+.metric-bar{width:80px;height:6px;background:var(--bg);border-radius:3px;overflow:hidden;display:inline-block;vertical-align:middle;margin-right:8px}
+.metric-bar-fill{height:100%;border-radius:3px}
+.metric-bar-fill.green{background:var(--success)}
+.metric-bar-fill.yellow{background:var(--warning)}
+.metric-bar-fill.red{background:var(--danger)}
+.action-btns{display:flex;gap:6px}
 @media (max-width:768px){.sidebar{width:60px}.logo{padding:15px;font-size:14px}.nav-section-title{display:none}.nav-item span{display:none}.main{margin-left:60px}.page{padding:15px}}
 </style>
 </head>
@@ -163,21 +159,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <div class="main">
 <div class="topbar">
 <h2 id="pageTitle">仪表盘</h2>
-<div style="display:flex;gap:10px">
 <button class="btn btn-outline" onclick="loadData()">刷新</button>
-</div>
 </div>
 <!-- Dashboard -->
 <div class="page active" id="dashboard">
-<div class="stats" id="dashboardStats">
-<div class="loading">加载中...</div>
-</div>
+<div class="stats" id="dashboardStats"><div class="loading">加载中...</div></div>
 <div style="display:grid;grid-template-columns:2fr 1fr;gap:25px">
 <div class="card">
 <div class="card-header"><span class="card-title">运行中任务</span></div>
-<div class="card-body" id="runningTasks">
-<div class="loading">加载中...</div>
-</div>
+<div class="card-body" id="runningTasks"><div class="loading">加载中...</div></div>
 </div>
 <div class="card">
 <div class="card-header"><span class="card-title">快捷操作</span></div>
@@ -193,16 +183,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 </div>
 <div class="card">
 <div class="card-header"><span class="card-title">最新告警</span></div>
-<div class="card-body" id="dashboardAlerts">
-<div class="loading">加载中...</div>
-</div>
+<div class="card-body" id="dashboardAlerts"><div class="loading">加载中...</div></div>
 </div>
 </div>
 <!-- Chat -->
 <div class="page" id="chat">
 <div class="chat-container">
-<div class="chat-messages" id="chatMessages">
-</div>
+<div class="chat-messages" id="chatMessages"></div>
 <div class="chat-input-area">
 <textarea class="chat-input" id="chatInput" placeholder="描述你的数据库需求..." rows="1" onkeypress="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage()}"></textarea>
 <button class="btn btn-primary" onclick="sendMessage()">发送</button>
@@ -212,9 +199,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <!-- Databases -->
 <div class="page" id="databases">
 <div class="card">
-<div class="card-header"><span class="card-title">数据库列表</span></div>
-<div class="card-body" id="dbList">
-<div class="loading">加载中...</div>
+<div class="card-header">
+<span class="card-title">数据库列表</span>
+<div style="display:flex;gap:10px;align-items:center">
+<input type="text" class="form-input" id="dbSearch" placeholder="搜索..." style="width:180px;padding:8px 12px" onkeyup="filterDb()">
+<button class="btn btn-primary btn-sm" onclick="showAddDb()">+ 添加</button>
+</div>
+</div>
+<div class="card-body" style="padding:0">
+<table class="db-table">
+<thead><tr><th>数据库</th><th>状态</th><th>连接</th><th>QPS</th><th>CPU</th><th>内存</th><th>磁盘</th><th>操作</th></tr></thead>
+<tbody id="dbTableBody"><tr><td colspan="8" class="loading">加载中...</td></tr></tbody>
+</table>
 </div>
 </div>
 </div>
@@ -222,27 +218,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <div class="page" id="monitor">
 <div class="card">
 <div class="card-header"><span class="card-title">性能监控</span><button class="btn btn-outline btn-sm" onclick="loadMonitor()">刷新</button></div>
-<div class="card-body" id="monitorTable">
-<div class="loading">加载中...</div>
-</div>
+<div class="card-body" id="monitorTable"><div class="loading">加载中...</div></div>
 </div>
 </div>
 <!-- Tasks -->
 <div class="page" id="tasks">
 <div class="card">
 <div class="card-header"><span class="card-title">全部任务</span></div>
-<div class="card-body" id="taskList">
-<div class="loading">加载中...</div>
-</div>
+<div class="card-body" id="taskList"><div class="loading">加载中...</div></div>
 </div>
 </div>
 <!-- Alerts -->
 <div class="page" id="alerts">
 <div class="card">
 <div class="card-header"><span class="card-title">告警中心</span></div>
-<div class="card-body" id="alertList">
-<div class="loading">加载中...</div>
-</div>
+<div class="card-body" id="alertList"><div class="loading">加载中...</div></div>
 </div>
 </div>
 <!-- SQL -->
@@ -250,19 +240,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <div class="card">
 <div class="card-header"><span class="card-title">SQL工具</span></div>
 <div class="card-body">
-<div class="form-group"><label class="form-label">选择数据库</label><select class="form-select" id="sqlDb"></select></div>
-<div class="form-group"><label class="form-label">SQL语句</label><textarea class="form-input" id="sqlInput" rows="6" placeholder="SELECT * FROM ..."></textarea></div>
-<div class="form-group"><label class="form-label">执行结果</label><pre class="form-input" id="sqlResult" style="min-height:150px;white-space:pre-wrap;overflow:auto" placeholder="结果..."></pre></div>
-<button class="btn btn-primary" onclick="executeSql()">执行SQL</button>
+<div class="form-group"><label class="form-label">数据库</label><select class="form-select" id="sqlDb"></select></div>
+<div class="form-group"><label class="form-label">SQL</label><textarea class="form-input" id="sqlInput" rows="6" placeholder="SELECT * FROM ..."></textarea></div>
+<div class="form-group"><label class="form-label">结果</label><pre class="form-input" id="sqlResult" style="min-height:150px;white-space:pre-wrap;overflow:auto"></pre></div>
+<button class="btn btn-primary" onclick="executeSql()">执行</button>
 </div>
 </div>
 </div>
 <!-- Config -->
 <div class="page" id="config">
 <div class="card">
-<div class="card-header"><span class="card-title">系统配置</span><button class="btn btn-primary" onclick="saveConfig()">保存配置</button></div>
+<div class="card-header"><span class="card-title">系统配置</span><button class="btn btn-primary" onclick="saveConfig()">保存</button></div>
 <div class="card-body">
-<div class="form-group"><label class="form-label">通知设置</label>
 <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)"><span>钉钉通知</span><div class="toggle-switch active" onclick="this.classList.toggle('active')"></div></div>
 <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)"><span>邮件通知</span><div class="toggle-switch active" onclick="this.classList.toggle('active')"></div></div>
 <div style="display:flex;justify-content:space-between;padding:12px 0"><span>企业微信</span><div class="toggle-switch" onclick="this.classList.toggle('active')"></div></div>
@@ -271,177 +260,158 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 </div>
 </div>
 </div>
+<!-- Modal -->
+<div class="modal" id="addDbModal">
+<div class="modal-content">
+<div class="modal-header"><h3 class="modal-title">添加数据库</h3><button class="modal-close" onclick="closeModal()">&times;</button></div>
+<div class="modal-body">
+<div class="form-group"><label class="form-label">类型</label><select class="form-select" id="newDbType"><option value="oracle">Oracle</option><option value="mysql">MySQL</option><option value="postgresql">PostgreSQL</option><option value="tidb">TiDB</option><option value="oceanbase">OceanBase</option><option value="redis">Redis</option></select></div>
+<div class="form-group"><label class="form-label">名称</label><input type="text" class="form-input" id="newDbName" placeholder="Oracle生产库"></div>
+<div class="form-group"><label class="form-label">主机</label><input type="text" class="form-input" id="newDbHost" placeholder="192.168.1.100"></div>
+<div class="form-group"><label class="form-label">端口</label><input type="text" class="form-input" id="newDbPort" placeholder="1521"></div>
+<div class="form-group"><label class="form-label">用户名</label><input type="text" class="form-input" id="newDbUser"></div>
+<div class="form-group"><label class="form-label">密码</label><input type="password" class="form-input" id="newDbPass"></div>
+</div>
+<div class="modal-footer"><button class="btn btn-outline" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="addDb()">添加</button></div>
+</div>
+</div>
 <script>
-// API基础URL
 const API = '';
+let allDatabases = [];
 
-// 加载数据
 async function loadData() {
   await Promise.all([loadDashboard(), loadTasks(), loadAlerts(), loadDatabases(), loadChatHistory()]);
 }
 
-// 加载仪表盘
 async function loadDashboard() {
   try {
     const res = await fetch(API + '/api/databases');
     const data = await res.json();
     if (data.success) {
       const dbs = data.data;
-      const stats = `
-<div class="stat" style="border-left:4px solid #f59e0b"><div class="stat-value">${dbs.filter(d=>d.type==='oracle').length}</div><div class="stat-label">Oracle</div></div>
-<div class="stat" style="border-left:4px solid #3b82f6"><div class="stat-value">${dbs.filter(d=>d.type==='mysql').length}</div><div class="stat-label">MySQL</div></div>
-<div class="stat" style="border-left:4px solid #8b5cf6"><div class="stat-value">${dbs.filter(d=>d.type==='postgresql').length}</div><div class="stat-label">PostgreSQL</div></div>
-<div class="stat" style="border-left:4px solid #ef4444"><div class="stat-value">${dbs.filter(d=>['redis','tidb','oceanbase'].includes(d.type)).length}</div><div class="stat-label">其他</div></div>`;
-      document.getElementById('dashboardStats').innerHTML = stats;
+      document.getElementById('dashboardStats').innerHTML = `<div class="stat" style="border-left:4px solid #f59e0b"><div class="stat-value">${dbs.filter(d=>d.type==='oracle').length}</div><div class="stat-label">Oracle</div></div><div class="stat" style="border-left:4px solid #3b82f6"><div class="stat-value">${dbs.filter(d=>d.type==='mysql').length}</div><div class="stat-label">MySQL</div></div><div class="stat" style="border-left:4px solid #8b5cf6"><div class="stat-value">${dbs.filter(d=>d.type==='postgresql').length}</div><div class="stat-label">PostgreSQL</div></div><div class="stat" style="border-left:4px solid #ef4444"><div class="stat-value">${dbs.filter(d=>['redis','tidb','oceanbase'].includes(d.type)).length}</div><div class="stat-label">其他</div></div>`;
     }
-  } catch (e) { document.getElementById('dashboardStats').innerHTML = '<div class="loading">加载失败，请启动后端服务</div>'; }
+  } catch (e) { document.getElementById('dashboardStats').innerHTML = '<div class="loading">加载失败</div>'; }
 }
 
-// 加载数据库列表
 async function loadDatabases() {
   try {
     const res = await fetch(API + '/api/databases');
     const data = await res.json();
     if (data.success) {
-      const icons = { oracle:'🐂', mysql:'🐬', postgresql:'🐘', redis:'🔴', tidb:'🐯', oceanbase:'🌊' };
-      const html = '<div class="db-grid">' + data.data.map(db => `
-<div class="db-card">
-<div class="db-header"><div class="db-icon ${db.type}">${icons[db.type]||'📦'}</div><div><div class="db-name">${db.name}</div><div class="db-version">${db.version} · ${db.mode}</div></div></div>
-<span class="badge ${db.status==='online'?'success':db.status==='warning'?'warning':'danger'}">${db.status==='online'?'在线':db.status==='warning'?'告警':'离线'}</span>
-<div class="db-metrics"><div class="metric"><div class="metric-value">${db.connections}</div><div class="metric-label">连接数</div></div><div class="metric"><div class="metric-value">${db.qps.toLocaleString()}</div><div class="metric-label">QPS</div></div></div>
-<div class="progress-wrap"><div class="progress-label"><span>CPU</span><span>${db.cpu}%</span></div><div class="progress"><div class="progress-bar ${db.cpu>80?'red':db.cpu>60?'yellow':'green'}" style="width:${db.cpu}%"></div></div>
-<div class="db-actions"><button class="btn btn-outline btn-sm" onclick="testConn('${db.id}')">测试</button><button class="btn btn-outline btn-sm" onclick="showQuery('${db.id}')">查询</button></div>
-</div>`).join('') + '</div>';
-      document.getElementById('dbList').innerHTML = html;
-      
-      // 更新SQL工具下拉
-      const sqlDbSelect = document.getElementById('sqlDb');
-      sqlDbSelect.innerHTML = data.data.map(db => `<option value="${db.id}">${db.name}</option>`).join('');
+      allDatabases = data.data;
+      renderDbTable(allDatabases);
+      document.getElementById('sqlDb').innerHTML = data.data.map(db => `<option value="${db.id}">${db.name}</option>`).join('');
     }
-  } catch (e) { document.getElementById('dbList').innerHTML = '<div class="loading">加载失败</div>'; }
+  } catch (e) { document.getElementById('dbTableBody').innerHTML = '<tr><td colspan="8" class="loading">加载失败</td></tr>'; }
 }
 
-// 加载任务
+function renderDbTable(dbs) {
+  const icons = { oracle:'🐂', mysql:'🐬', postgresql:'🐘', redis:'🔴', tidb:'🐯', oceanbase:'🌊' };
+  const tbody = document.getElementById('dbTableBody');
+  if (!dbs.length) { tbody.innerHTML = '<tr><td colspan="8" class="loading">暂无数据</td></tr>'; return; }
+  tbody.innerHTML = dbs.map(db => {
+    const cpuClass = db.cpu > 80 ? 'red' : db.cpu > 60 ? 'yellow' : 'green';
+    return `<tr><td><div class="db-name-cell"><div class="db-icon ${db.type}">${icons[db.type]||'📦'}</div><div><div class="db-name-text">${db.name}</div><div class="db-version-text">${db.version} · ${db.mode}</div></div></div></td><td><span class="badge ${db.status==='online'?'success':db.status==='warning'?'warning':'danger'}">${db.status==='online'?'在线':db.status==='warning'?'告警':'离线'}</span></td><td>${db.connections}</td><td>${db.qps.toLocaleString()}</td><td><span class="metric-bar"><span class="metric-bar-fill ${cpuClass}" style="width:${db.cpu}%"></span></span>${db.cpu}%</td><td>${db.memory}</td><td>${db.disk}</td><td><div class="action-btns"><button class="btn btn-outline btn-xs" onclick="testConn('${db.id}')">测试</button><button class="btn btn-outline btn-xs" onclick="showQuery('${db.id}')">查询</button><button class="btn btn-outline btn-xs" onclick="showDbDetail('${db.id}')">详情</button></div></td></tr>`;
+  }).join('');
+}
+
+function filterDb() {
+  const kw = document.getElementById('dbSearch').value.toLowerCase();
+  renderDbTable(allDatabases.filter(db => db.name.toLowerCase().includes(kw) || db.type.toLowerCase().includes(kw)));
+}
+
 async function loadTasks() {
   try {
     const res = await fetch(API + '/api/tasks');
     const data = await res.json();
     if (data.success) {
-      const html = data.data.map(t => `
-<div class="task-item"><div class="task-priority ${t.priority}"></div><div class="task-info"><div class="task-title">${t.title}</div><div class="task-meta">${t.expert} · 开始于 ${t.startTime}</div></div><span class="badge ${t.status==='running'?'info':t.status==='done'?'success':'warning'}">${t.status==='running'?'进行中':t.status==='done'?'已完成':'等待中'}</span></div>`).join('');
+      const html = data.data.map(t => `<div class="task-item"><div class="task-priority ${t.priority}"></div><div class="task-info"><div class="task-title">${t.title}</div><div class="task-meta">${t.expert} · ${t.startTime}</div></div><span class="badge ${t.status==='running'?'info':t.status==='done'?'success':'warning'}">${t.status==='running'?'进行中':t.status==='done'?'已完成':'等待中'}</span></div>`).join('');
       document.getElementById('taskList').innerHTML = html || '<div class="loading">暂无任务</div>';
-      document.getElementById('runningTasks').innerHTML = html || '<div class="loading">暂无运行中任务</div>';
+      document.getElementById('runningTasks').innerHTML = html || '<div class="loading">无运行中</div>';
     }
   } catch (e) { document.getElementById('taskList').innerHTML = '<div class="loading">加载失败</div>'; }
 }
 
-// 加载告警
 async function loadAlerts() {
   try {
     const res = await fetch(API + '/api/alerts');
     const data = await res.json();
     if (data.success) {
       const icons = { critical:'🔴', warning:'🟡', info:'🔵' };
-      const html = data.data.map(a => `
-<div class="alert-item ${a.level}"><div class="alert-icon">${icons[a.level]}</div><div class="alert-content"><div class="alert-title">${a.title}</div><div class="alert-desc">${a.desc}</div><div class="alert-time">${a.time} · ${a.db}</div></div></div>`).join('');
-      document.getElementById('alertList').innerHTML = html || '<div class="loading">暂无告警</div>';
-      document.getElementById('dashboardAlerts').innerHTML = html || '<div class="loading">暂无告警</div>';
+      const html = data.data.map(a => `<div class="alert-item ${a.level}"><div class="alert-icon">${icons[a.level]}</div><div class="alert-content"><div class="alert-title">${a.title}</div><div class="alert-desc">${a.desc}</div><div class="alert-time">${a.time} · ${a.db}</div></div></div>`).join('');
+      document.getElementById('alertList').innerHTML = html || '<div class="loading">无告警</div>';
+      document.getElementById('dashboardAlerts').innerHTML = html || '<div class="loading">无告警</div>';
     }
   } catch (e) { document.getElementById('alertList').innerHTML = '<div class="loading">加载失败</div>'; }
 }
 
-// 加载监控
 async function loadMonitor() {
   try {
     const res = await fetch(API + '/api/monitor');
     const data = await res.json();
     if (data.success) {
-      const html = `<table class="table"><thead><tr><th>数据库</th><th>QPS</th><th>CPU</th><th>内存</th><th>磁盘</th><th>状态</th></tr></thead><tbody>` + 
-        data.data.map(db => `<tr><td>${db.name}</td><td>${db.qps.toLocaleString()}</td><td>${db.cpu}%</td><td>${db.memory}</td><td>${db.disk}</td><td><span class="badge ${db.status==='online'?'success':'warning'}">${db.status==='online'?'正常':'告警'}</span></td></tr>`).join('') + 
-        '</tbody></table>';
-      document.getElementById('monitorTable').innerHTML = html;
+      document.getElementById('monitorTable').innerHTML = `<table class="table"><thead><tr><th>数据库</th><th>QPS</th><th>CPU</th><th>内存</th><th>磁盘</th><th>状态</th></tr></thead><tbody>` + data.data.map(db => `<tr><td>${db.name}</td><td>${db.qps.toLocaleString()}</td><td>${db.cpu}%</td><td>${db.memory}</td><td>${db.disk}</td><td><span class="badge ${db.status==='online'?'success':'warning'}">${db.status==='online'?'正常':'告警'}</span></td></tr>`).join('') + '</tbody></table>';
     }
   } catch (e) { document.getElementById('monitorTable').innerHTML = '<div class="loading">加载失败</div>'; }
 }
 
-// 加载聊天历史
 async function loadChatHistory() {
   try {
     const res = await fetch(API + '/api/chat/history');
     const data = await res.json();
-    if (data.success && data.history) {
-      const html = data.history.map(m => `<div class="message ${m.role}"><div class="message-avatar"></div><div class="message-content"><div class="message-bubble">${m.content}</div></div></div>`).join('');
-      document.getElementById('chatMessages').innerHTML = html;
-    }
-  } catch (e) { console.log('加载聊天历史失败'); }
+    if (data.success && data.history) document.getElementById('chatMessages').innerHTML = data.history.map(m => `<div class="message ${m.role}"><div class="message-avatar"></div><div class="message-content"><div class="message-bubble">${m.content}</div></div></div>`).join('');
+  } catch (e) {}
 }
 
-// 发送消息
 async function sendMessage() {
-  const input = document.getElementById('chatInput');
-  const msg = input.value.trim();
+  const msg = document.getElementById('chatInput').value.trim();
   if (!msg) return;
-  
   const msgs = document.getElementById('chatMessages');
   msgs.innerHTML += `<div class="message user"><div class="message-avatar"></div><div class="message-content"><div class="message-bubble">${msg}</div></div></div>`;
-  input.value = '';
+  document.getElementById('chatInput').value = '';
   msgs.scrollTop = msgs.scrollHeight;
-  
   try {
-    const res = await fetch(API + '/api/chat', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({message: msg})
-    });
+    const res = await fetch(API + '/api/chat', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg})});
     const data = await res.json();
-    if (data.success) {
-      msgs.innerHTML += `<div class="message ai"><div class="message-avatar"></div><div class="message-content"><div class="message-bubble">${data.response}</div></div></div>`;
-      msgs.scrollTop = msgs.scrollHeight;
-    }
+    if (data.success) msgs.innerHTML += `<div class="message ai"><div class="message-avatar"></div><div class="message-content"><div class="message-bubble">${data.response}</div></div></div>`;
+    msgs.scrollTop = msgs.scrollHeight;
   } catch (e) { alert('发送失败'); }
 }
 
-// 测试连接
 async function testConn(id) {
-  try {
-    const res = await fetch(API + '/api/test?id=' + id);
-    const data = await res.json();
-    alert(data.message);
-  } catch (e) { alert('测试失败'); }
+  const res = await fetch(API + '/api/test?id=' + id);
+  const data = await res.json();
+  alert(data.message);
 }
 
-// 显示SQL查询
-function showQuery(id) {
-  switchPage('sql');
-  document.getElementById('sqlDb').value = id;
+function showQuery(id) { switchPage('sql'); document.getElementById('sqlDb').value = id; }
+
+async function showDbDetail(id) {
+  const res = await fetch(API + '/api/database?id=' + id);
+  const data = await res.json();
+  if (data.success) {
+    const db = data.data;
+    alert(`${db.name}\n\n类型: ${db.type}\n版本: ${db.version}\n模式: ${db.mode}\n状态: ${db.status}\n连接: ${db.connections}\nQPS: ${db.qps}\nCPU: ${db.cpu}%\n内存: ${db.memory}\n磁盘: ${db.disk}`);
+  }
 }
 
-// 执行SQL
 async function executeSql() {
   const db = document.getElementById('sqlDb').value;
   const sql = document.getElementById('sqlInput').value.trim();
-  if (!sql) { alert('请输入SQL'); return; }
-  
+  if (!sql) return alert('请输入SQL');
   document.getElementById('sqlResult').textContent = '执行中...';
   try {
-    const res = await fetch(API + '/api/sql/execute', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({database: db, sql})
-    });
+    const res = await fetch(API + '/api/sql/execute', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({database:db,sql})});
     const data = await res.json();
     if (data.success) {
-      let result = `执行成功 (${data.executionTime})\n影响行数: ${data.affectedRows}\n\n`;
-      if (data.columns) {
-        result += data.columns.join(' | ') + '\n' + data.columns.map(()=>'---').join(' | ') + '\n';
-        result += data.rows.map(r=>r.join(' | ')).join('\n');
-      }
-      document.getElementById('sqlResult').textContent = result;
+      let r = `成功 (${data.executionTime})\n行数: ${data.affectedRows}\n\n`;
+      if (data.columns) r += data.columns.join(' | ') + '\n' + data.columns.map(()=>'---').join(' | ') + '\n' + data.rows.map(r=>r.join(' | ')).join('\n');
+      document.getElementById('sqlResult').textContent = r;
     }
-  } catch (e) { document.getElementById('sqlResult').textContent = '执行失败: ' + e.message; }
+  } catch (e) { document.getElementById('sqlResult').textContent = '失败: ' + e.message; }
 }
 
-// 页面切换
 document.querySelectorAll('.nav-item').forEach(n=>n.addEventListener('click',function(){
   document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
@@ -449,6 +419,7 @@ document.querySelectorAll('.nav-item').forEach(n=>n.addEventListener('click',fun
   document.getElementById(this.dataset.page).classList.add('active');
   document.getElementById('pageTitle').textContent=this.textContent;
 }));
+
 function switchPage(p){
   document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
@@ -457,15 +428,11 @@ function switchPage(p){
   document.getElementById('pageTitle').textContent=document.querySelector('[data-page="'+p+'"]').textContent;
 }
 
-// 快捷操作
-function quickAction(t) {
-  const msgs = { inspection: '正在执行巡检任务...', report: '正在生成报告...' };
-  alert(msgs[t] || '功能: ' + t);
-}
-
-function saveConfig() { alert('配置已保存'); }
-
-// 初始化
+function showAddDb(){document.getElementById('addDbModal').classList.add('show');}
+function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.remove('show'));}
+function addDb(){alert('添加成功');closeModal();}
+function quickAction(t){alert(t==='inspection'?'正在巡检...':'正在生成报告...');}
+function saveConfig(){alert('已保存');}
 loadData();
 loadMonitor();
 </script>
