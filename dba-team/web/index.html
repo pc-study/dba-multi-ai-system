@@ -208,7 +208,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 </div>
 <div class="card-body" style="padding:0">
 <table class="db-table">
-<thead><tr><th>数据库</th><th>状态</th><th>连接</th><th>QPS</th><th>CPU</th><th>内存</th><th>磁盘</th><th>操作</th></tr></thead>
+<thead><tr><th>数据库</th><th>状态</th><th>连接</th><th>QPS</th><th>CPU</th><th>内存</th><th>磁盘</th><th>IP:端口</th>
+<th>IP:Port</th>
+<th>操作</th></tr></thead>
 <tbody id="dbTableBody"><tr><td colspan="8" class="loading">加载中...</td></tr></tbody>
 </table>
 </div>
@@ -309,10 +311,11 @@ async function loadDatabases() {
 function renderDbTable(dbs) {
   const icons = { oracle:'🐂', mysql:'🐬', postgresql:'🐘', redis:'🔴', tidb:'🐯', oceanbase:'🌊' };
   const tbody = document.getElementById('dbTableBody');
-  if (!dbs.length) { tbody.innerHTML = '<tr><td colspan="8" class="loading">暂无数据</td></tr>'; return; }
+  if (!dbs.length) { tbody.innerHTML = '<tr><td colspan="9" class="loading">暂无数据</td></tr>'; return; }
   tbody.innerHTML = dbs.map(db => {
     const cpuClass = db.cpu > 80 ? 'red' : db.cpu > 60 ? 'yellow' : 'green';
-    return `<tr><td><div class="db-name-cell"><div class="db-icon ${db.type}">${icons[db.type]||'📦'}</div><div><div class="db-name-text">${db.name}</div><div class="db-version-text">${db.version} · ${db.mode}</div></div></div></td><td><span class="badge ${db.status==='online'?'success':db.status==='warning'?'warning':'danger'}">${db.status==='online'?'在线':db.status==='warning'?'告警':'离线'}</span></td><td>${db.connections}</td><td>${db.qps.toLocaleString()}</td><td><span class="metric-bar"><span class="metric-bar-fill ${cpuClass}" style="width:${db.cpu}%"></span></span>${db.cpu}%</td><td>${db.memory}</td><td>${db.disk}</td><td><div class="action-btns"><button class="btn btn-outline btn-xs" onclick="testConn('${db.id}')">测试</button><button class="btn btn-outline btn-xs" onclick="showQuery('${db.id}')">查询</button><button class="btn btn-outline btn-xs" onclick="showDbDetail('${db.id}')">详情</button></div></td></tr>`;
+    return `<tr><td><div class="db-name-cell"><div class="db-icon ${db.type}">${icons[db.type]||'📦'}</div><div><div class="db-name-text">${db.name}</div><div class="db-version-text">${db.version} · ${db.mode}</div></div></div></td><td>${db.ip}:${db.port}</td>
+<td><span class="badge ${db.status==='online'?'success':db.status==='warning'?'warning':'danger'}">${db.status==='online'?'在线':db.status==='warning'?'告警':'离线'}</span></td><td>${db.connections}</td><td>${db.qps.toLocaleString()}</td><td><span class="metric-bar"><span class="metric-bar-fill ${cpuClass}" style="width:${db.cpu}%"></span></span>${db.cpu}%</td><td>${db.memory}</td><td>${db.disk}</td></td><td><div class="action-btns"><button class="btn btn-outline btn-xs" onclick="testConn('${db.id}')">测试</button><button class="btn btn-outline btn-xs" onclick="showQuery('${db.id}')">查询</button><button class="btn btn-outline btn-xs" onclick="showDbDetail('${db.id}')">详情</button></div></td></tr>`;
   }).join('');
 }
 
@@ -351,7 +354,8 @@ async function loadMonitor() {
     const res = await fetch(API + '/api/monitor');
     const data = await res.json();
     if (data.success) {
-      document.getElementById('monitorTable').innerHTML = `<table class="table"><thead><tr><th>数据库</th><th>QPS</th><th>CPU</th><th>内存</th><th>磁盘</th><th>状态</th></tr></thead><tbody>` + data.data.map(db => `<tr><td>${db.name}</td><td>${db.qps.toLocaleString()}</td><td>${db.cpu}%</td><td>${db.memory}</td><td>${db.disk}</td><td><span class="badge ${db.status==='online'?'success':'warning'}">${db.status==='online'?'正常':'告警'}</span></td></tr>`).join('') + '</tbody></table>';
+      document.getElementById('monitorTable').innerHTML = `<table class="table"><thead><tr><th>数据库</th><th>QPS</th><th>CPU</th><th>内存</th><th>磁盘</th><th>状态</th></tr></thead><tbody>` + data.data.map(db => `<tr><td>${db.name}</td><td>${db.qps.toLocaleString()}</td><td>${db.cpu}%</td><td>${db.memory}</td><td>${db.disk}</td><td>${db.ip}:${db.port}</td>
+<td><span class="badge ${db.status==='online'?'success':'warning'}">${db.status==='online'?'正常':'告警'}</span></td></tr>`).join('') + '</tbody></table>';
     }
   } catch (e) { document.getElementById('monitorTable').innerHTML = '<div class="loading">加载失败</div>'; }
 }
