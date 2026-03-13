@@ -2,34 +2,35 @@
 
 ## 官方资源
 
-- **官方文档**: https://eco.dameng.com/document/dm8
+- **官网**: https://dameng.com/
+- **官方文档**: https://eco.dameng.com/document/dm/zh-cn/start/index.html
+- **社区问答**: https://eco.dameng.com/community/question
 - **达梦开发者社区**: https://eco.dameng.com/
-- **达梦官网**: https://www.dameng.com/
 
 ## 版本文档
 
-- **DM8**: https://eco.dameng.com/document/dm8
-- **DM7**: https://eco.dameng.com/document/dm7
+- **DM8**: https://eco.dameng.com/document/dm/zh-cn/start/index.html
+- **DM7**: https://eco.dameng.com/document/dm/zh-cn/start/index.html
 
 ## 常用链接
 
 ### 快速入门
-- 安装指南: https://eco.dameng.com/document/dm8/quickstart
-- 基础操作: https://eco.dameng.com/document/dm8/quickstart
+- 快速开始: https://eco.dameng.com/document/dm/zh-cn/start/index.html
+- 安装指南: https://eco.dameng.com/document/dm/zh-cn/install/index.html
 
 ### 运维管理
-- DM服务管理: https://eco.dameng.com/document/dm8/administrator
-- 客户端工具: https://eco.dameng.com/document/dm8/client
-- 备份恢复: https://eco.dameng.com/document/dm8/backup
+- DM服务管理: https://eco.dameng.com/document/dm/zh-cn/admin/index.html
+- 客户端工具: https://eco.dameng.com/document/dm/zh-cn/tools/index.html
+- 备份恢复: https://eco.dameng.com/document/dm/zh-cn/backup/index.html
 
 ### 性能优化
-- SQL调优: https://eco.dameng.com/document/dm8/optimizer
-- 执行计划: https://eco.dameng.com/document/dm8/optimizer
-- 统计信息: https://eco.dameng.com/document/dm8/optimizer
+- SQL调优: https://eco.dameng.com/document/dm/zh-cn/optimizer/index.html
+- 执行计划: https://eco.dameng.com/document/dm/zh-cn/optimizer/explain.html
+- 统计信息: https://eco.dameng.com/document/dm/zh-cn/optimizer/statistics.html
 
 ### 高可用
-- 数据守护: https://eco.dameng.com/document/dm8/dm-data-guard
-- DMDSC集群: https://eco.dameng.com/document/dm8/dmsc
+- 数据守护: https://eco.dameng.com/document/dm/zh-cn/backup/architect.html
+- DMDSC集群: https://eco.dameng.com/document/dm/zh-cn/dmsc/index.html
 
 ## 常用工具
 
