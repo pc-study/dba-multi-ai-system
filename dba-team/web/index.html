@@ -37,7 +37,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .card-title{font-size:16px;font-weight:600}
 .card-body{padding:24px}
 .db-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
-.db-card{background:var(--white);border-radius:12px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.05);cursor:pointer;transition:0.3s;border:2px solid transparent}
+.db-card{background:var(--white);border-radius:12px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.05);transition:0.3s;border:2px solid transparent}
 .db-card:hover{border-color:var(--primary);transform:translateY(-2px)}
 .badge{padding:4px 10px;border-radius:20px;font-size:12px;display:inline-block;font-weight:500}
 .badge.success{background:#dcfce7;color:#166534}
@@ -50,6 +50,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .db-icon.mysql{background:#eff6ff}
 .db-icon.pg{background:#f5f3ff}
 .db-icon.redis{background:#fef2f2}
+.db-icon.tidb{background:#e0e7ff}
+.db-icon.ob{background:#ecfdf5}
 .db-name{font-size:16px;font-weight:600;margin-bottom:4px}
 .db-version{font-size:13px;color:var(--text-lighter)}
 .db-metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:15px 0;padding:15px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
@@ -73,7 +75,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .message.ai .message-avatar{background:var(--primary)}
 .message.user .message-avatar{background:var(--success)}
 .message-content{max-width:70%}
-.message-bubble{padding:14px 18px;border-radius:16px;font-size:14px;line-height:1.6}
+.message-bubble{padding:14px 18px;border-radius:16px;font-size:14px;line-height:1.6;white-space:pre-wrap}
 .message.ai .message-bubble{background:var(--bg);border-bottom-left-radius:4px}
 .message.user .message-bubble{background:var(--primary);color:#fff;border-bottom-right-radius:4px}
 .chat-input-area{padding:20px;border-top:1px solid var(--border);display:flex;gap:12px}
@@ -121,13 +123,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .tab{padding:12px 24px;cursor:pointer;color:var(--text-light);border-bottom:2px solid transparent;transition:0.3s;margin-bottom:-2px}
 .tab:hover{color:var(--primary)}
 .tab.active{color:var(--primary);border-bottom-color:var(--primary)}
-.tab-content{display:none}
-.tab-content.active{display:block}
 .quick-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px}
 .quick-action{background:var(--white);border-radius:12px;padding:24px;text-align:center;cursor:pointer;transition:0.3s;border:2px solid transparent}
 .quick-action:hover{border-color:var(--primary);transform:translateY(-4px)}
 .quick-action-icon{font-size:32px;margin-bottom:12px}
 .quick-action-text{font-size:14px;color:var(--text-light)}
+.loading{text-align:center;padding:40px;color:var(--text-lighter)}
 @media (max-width:768px){.sidebar{width:60px}.logo{padding:15px;font-size:14px}.nav-section-title{display:none}.nav-item span{display:none}.main{margin-left:60px}.page{padding:15px}}
 </style>
 </head>
@@ -144,7 +145,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <div class="nav-section-title">资源</div>
 <div class="nav-item" data-page="databases">数据库</div>
 <div class="nav-item" data-page="monitor">性能监控</div>
-<div class="nav-item" data-page="backup">备份中心</div>
 </div>
 <div class="nav-section">
 <div class="nav-section-title">任务</div>
@@ -154,7 +154,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <div class="nav-section">
 <div class="nav-section-title">工具</div>
 <div class="nav-item" data-page="sql">SQL工具</div>
-<div class="nav-item" data-page="security">安全扫描</div>
 </div>
 <div class="nav-section">
 <div class="nav-section-title">系统</div>
@@ -165,43 +164,37 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <div class="topbar">
 <h2 id="pageTitle">仪表盘</h2>
 <div style="display:flex;gap:10px">
-<button class="btn btn-outline" onclick="refreshAll()">刷新</button>
-<button class="btn btn-primary" onclick="showNewTask()">+ 新建任务</button>
+<button class="btn btn-outline" onclick="loadData()">刷新</button>
 </div>
 </div>
 <!-- Dashboard -->
 <div class="page active" id="dashboard">
-<div class="stats">
-<div class="stat" style="border-left:4px solid #f59e0b"><div class="stat-value">3</div><div class="stat-label">Oracle</div></div>
-<div class="stat" style="border-left:4px solid #3b82f6"><div class="stat-value">2</div><div class="stat-label">MySQL</div></div>
-<div class="stat" style="border-left:4px solid #8b5cf6"><div class="stat-value">1</div><div class="stat-label">PostgreSQL</div></div>
-<div class="stat" style="border-left:4px solid #ef4444"><div class="stat-value">2</div><div class="stat-label">其他</div></div>
+<div class="stats" id="dashboardStats">
+<div class="loading">加载中...</div>
 </div>
 <div style="display:grid;grid-template-columns:2fr 1fr;gap:25px">
 <div class="card">
 <div class="card-header"><span class="card-title">运行中任务</span></div>
-<div class="card-body">
-<div class="task-item"><div class="task-priority high"></div><div class="task-info"><div class="task-title">Oracle迁TiDB迁移方案设计</div><div class="task-meta">Oracle+TiDB专家 · 开始于 10:15</div></div><span class="badge info">进行中</span></div>
-<div class="task-item"><div class="task-priority medium"></div><div class="task-info"><div class="task-title">MySQL慢查询优化</div><div class="task-meta">MySQL专家 · 开始于 11:30</div></div><span class="badge info">进行中</span></div>
+<div class="card-body" id="runningTasks">
+<div class="loading">加载中...</div>
 </div>
 </div>
 <div class="card">
 <div class="card-header"><span class="card-title">快捷操作</span></div>
 <div class="card-body">
 <div class="quick-actions">
-<div class="quick-action" onclick="quickAction('inspection')"><div class="quick-action-icon"></div><div class="quick-action-text">执行巡检</div></div>
-<div class="quick-action" onclick="quickAction('report')"><div class="quick-action-icon"></div><div class="quick-action-text">生成报告</div></div>
-<div class="quick-action" onclick="switchPage('sql')"><div class="quick-action-icon"></div><div class="quick-action-text">SQL工具</div></div>
-<div class="quick-action" onclick="switchPage('security')"><div class="quick-action-icon"></div><div class="quick-action-text">安全扫描</div></div>
+<div class="quick-action" onclick="quickAction('inspection')"><div class="quick-action-icon">🔍</div><div class="quick-action-text">执行巡检</div></div>
+<div class="quick-action" onclick="quickAction('report')"><div class="quick-action-icon">📊</div><div class="quick-action-text">生成报告</div></div>
+<div class="quick-action" onclick="switchPage('sql')"><div class="quick-action-icon">💾</div><div class="quick-action-text">SQL工具</div></div>
+<div class="quick-action" onclick="switchPage('chat')"><div class="quick-action-icon">💬</div><div class="quick-action-text">AI问答</div></div>
 </div>
 </div>
 </div>
 </div>
 <div class="card">
 <div class="card-header"><span class="card-title">最新告警</span></div>
-<div class="card-body">
-<div class="alert-item critical"><div class="alert-icon"></div><div class="alert-content"><div class="alert-title">Oracle生产库连接数告警</div><div class="alert-desc">当前连接数 195/200 (97.5%)</div><div class="alert-time">5分钟前</div></div></div>
-<div class="alert-item warning"><div class="alert-icon"></div><div class="alert-content"><div class="alert-title">PG表空间使用率超标</div><div class="alert-desc">使用率 85%，超过阈值 80%</div><div class="alert-time">30分钟前</div></div></div>
+<div class="card-body" id="dashboardAlerts">
+<div class="loading">加载中...</div>
 </div>
 </div>
 </div>
@@ -209,10 +202,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <div class="page" id="chat">
 <div class="chat-container">
 <div class="chat-messages" id="chatMessages">
-<div class="message ai"><div class="message-avatar"></div><div class="message-content"><div class="message-bubble">你好！我是DBA团队的AI助手。<br><br>我可以帮你：<br>- 解答数据库问题<br>- 优化SQL<br>- 搭建高可用架构<br>- 排查故障<br>- 设计迁移方案<br><br>直接描述你的需求即可！</div></div></div>
 </div>
 <div class="chat-input-area">
-<textarea class="chat-input" id="chatInput" placeholder="描述你的数据库需求..." rows="1"></textarea>
+<textarea class="chat-input" id="chatInput" placeholder="描述你的数据库需求..." rows="1" onkeypress="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage()}"></textarea>
 <button class="btn btn-primary" onclick="sendMessage()">发送</button>
 </div>
 </div>
@@ -220,58 +212,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <!-- Databases -->
 <div class="page" id="databases">
 <div class="card">
-<div class="card-header"><span class="card-title">数据库列表</span><button class="btn btn-primary btn-sm" onclick="showAddDb()">+ 添加数据库</button></div>
-<div class="card-body">
-<div class="db-grid">
-<div class="db-card">
-<div class="db-header"><div class="db-icon oracle"></div><div><div class="db-name">Oracle 生产库</div><div class="db-version">19.29.0 · 2节点RAC</div></div></div>
-<span class="badge success">在线</span>
-<div class="db-metrics"><div class="metric"><div class="metric-value">168</div><div class="metric-label">连接数</div></div><div class="metric"><div class="metric-value">1,250</div><div class="metric-label">QPS</div></div></div>
-<div class="progress-wrap"><div class="progress-label"><span>CPU</span><span>65%</span></div><div class="progress"><div class="progress-bar green" style="width:65%"></div></div>
-<div class="db-actions"><button class="btn btn-outline btn-sm">测试</button><button class="btn btn-outline btn-sm">查询</button><button class="btn btn-outline btn-sm">详情</button></div>
-</div>
-<div class="db-card">
-<div class="db-header"><div class="db-icon mysql"></div><div><div class="db-name">MySQL 生产库</div><div class="db-version">8.0.32 · MGR集群</div></div></div>
-<span class="badge success">在线</span>
-<div class="db-metrics"><div class="metric"><div class="metric-value">86</div><div class="metric-label">连接数</div></div><div class="metric"><div class="metric-value">2,340</div><div class="metric-label">QPS</div></div></div>
-<div class="progress-wrap"><div class="progress-label"><span>CPU</span><span>45%</span></div><div class="progress"><div class="progress-bar green" style="width:45%"></div></div>
-<div class="db-actions"><button class="btn btn-outline btn-sm">测试</button><button class="btn btn-outline btn-sm">查询</button><button class="btn btn-outline btn-sm">详情</button></div>
-</div>
-<div class="db-card">
-<div class="db-header"><div class="db-icon pg"></div><div><div class="db-name">PostgreSQL</div><div class="db-version">15.4 · 主从复制</div></div></div>
-<span class="badge warning">空间不足</span>
-<div class="db-metrics"><div class="metric"><div class="metric-value">38</div><div class="metric-label">连接数</div></div><div class="metric"><div class="metric-value">420</div><div class="metric-label">QPS</div></div></div>
-<div class="progress-wrap"><div class="progress-label"><span>磁盘</span><span>85%</span></div><div class="progress"><div class="progress-bar red" style="width:85%"></div></div>
-<div class="db-actions"><button class="btn btn-outline btn-sm">测试</button><button class="btn btn-outline btn-sm">查询</button><button class="btn btn-outline btn-sm">详情</button></div>
-</div>
-</div>
+<div class="card-header"><span class="card-title">数据库列表</span></div>
+<div class="card-body" id="dbList">
+<div class="loading">加载中...</div>
 </div>
 </div>
 </div>
 <!-- Monitor -->
 <div class="page" id="monitor">
 <div class="card">
-<div class="card-header"><span class="card-title">性能监控</span><button class="btn btn-outline btn-sm" onclick="refreshMonitor()">刷新</button></div>
-<div class="card-body">
-<table class="table"><thead><tr><th>数据库</th><th>QPS</th><th>TPS</th><th>CPU</th><th>内存</th><th>状态</th></tr></thead>
-<tbody>
-<tr><td>Oracle</td><td>1,250</td><td>380</td><td>65%</td><td>12GB/16GB</td><td><span class="badge success">正常</span></td></tr>
-<tr><td>MySQL</td><td>2,340</td><td>890</td><td>45%</td><td>8GB/16GB</td><td><span class="badge success">正常</span></td></tr>
-<tr><td>PostgreSQL</td><td>420</td><td>120</td><td>78%</td><td>6GB/8GB</td><td><span class="badge warning">告警</span></td></tr>
-</tbody></table>
-</div>
-</div>
-</div>
-<!-- Backup -->
-<div class="page" id="backup">
-<div class="card">
-<div class="card-header"><span class="card-title">备份任务</span><button class="btn btn-primary btn-sm">+ 新建备份</button></div>
-<div class="card-body">
-<table class="table"><thead><tr><th>任务名</th><th>数据库</th><th>类型</th><th>状态</th><th>时间</th><th>操作</th></tr></thead>
-<tbody>
-<tr><td>全量备份-daily</td><td>Oracle</td><td>全量</td><td><span class="badge success">完成</span></td><td>02:00</td><td><button class="btn btn-outline btn-sm">恢复</button></td></tr>
-<tr><td>增量备份-hourly</td><td>MySQL</td><td>增量</td><td><span class="badge success">完成</span></td><td>12:00</td><td><button class="btn btn-outline btn-sm">恢复</button></td></tr>
-</tbody></table>
+<div class="card-header"><span class="card-title">性能监控</span><button class="btn btn-outline btn-sm" onclick="loadMonitor()">刷新</button></div>
+<div class="card-body" id="monitorTable">
+<div class="loading">加载中...</div>
 </div>
 </div>
 </div>
@@ -279,22 +231,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <div class="page" id="tasks">
 <div class="card">
 <div class="card-header"><span class="card-title">全部任务</span></div>
-<div class="card-body">
-<div class="task-item"><div class="task-priority high"></div><div class="task-info"><div class="task-title">Oracle迁TiDB迁移方案设计</div><div class="task-meta">Oracle+TiDB专家 · 开始于 10:15</div></div><span class="badge info">进行中</span></div>
-<div class="task-item"><div class="task-priority medium"></div><div class="task-info"><div class="task-title">MySQL慢查询优化</div><div class="task-meta">MySQL专家 · 开始于 11:30</div></div><span class="badge info">进行中</span></div>
-<div class="task-item"><div class="task-priority low"></div><div class="task-info"><div class="task-title">PG空间扩容评估</div><div class="task-meta">PG专家 · 开始于 09:00</div></div><span class="badge warning">等待中</span></div>
-</div>
+<div class="card-body" id="taskList">
+<div class="loading">加载中...</div>
 </div>
 </div>
 </div>
 <!-- Alerts -->
 <div class="page" id="alerts">
 <div class="card">
-<div class="card-header"><span class="card-title">告警中心</span><button class="btn btn-outline btn-sm">全部已读</button></div>
-<div class="card-body">
-<div class="alert-item critical"><div class="alert-icon"></div><div class="alert-content"><div class="alert-title">Oracle生产库连接数告警</div><div class="alert-desc">当前连接数 195/200</div><div class="alert-time">5分钟前</div></div></div>
-<div class="alert-item warning"><div class="alert-icon"></div><div class="alert-content"><div class="alert-title">PG表空间超过80%</div><div class="alert-desc">当前使用率: 85%</div><div class="alert-time">30分钟前</div></div>
-<div class="alert-item info"><div class="alert-icon"></div><div class="alert-content"><div class="alert-title">定时巡检完成</div><div class="alert-desc">8个数据库巡检完成</div><div class="alert-time">1小时前</div></div></div>
+<div class="card-header"><span class="card-title">告警中心</span></div>
+<div class="card-body" id="alertList">
+<div class="loading">加载中...</div>
 </div>
 </div>
 </div>
@@ -303,21 +250,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <div class="card">
 <div class="card-header"><span class="card-title">SQL工具</span></div>
 <div class="card-body">
-<div class="form-group"><label class="form-label">选择数据库</label><select class="form-select"><option>Oracle</option><option>MySQL</option><option>PostgreSQL</option></select></div>
-<div class="form-group"><label class="form-label">SQL语句</label><textarea class="form-input" rows="6" placeholder="SELECT * FROM ..."></textarea></div>
-<div class="form-group"><label class="form-label">执行结果</label><textarea class="form-input" rows="8" readonly placeholder="结果..."></textarea></div>
+<div class="form-group"><label class="form-label">选择数据库</label><select class="form-select" id="sqlDb"></select></div>
+<div class="form-group"><label class="form-label">SQL语句</label><textarea class="form-input" id="sqlInput" rows="6" placeholder="SELECT * FROM ..."></textarea></div>
+<div class="form-group"><label class="form-label">执行结果</label><pre class="form-input" id="sqlResult" style="min-height:150px;white-space:pre-wrap;overflow:auto" placeholder="结果..."></pre></div>
 <button class="btn btn-primary" onclick="executeSql()">执行SQL</button>
-</div>
-</div>
-</div>
-</div>
-<!-- Security -->
-<div class="page" id="security">
-<div class="card">
-<div class="card-header"><span class="card-title">安全扫描</span><button class="btn btn-primary btn-sm">开始扫描</button></div>
-<div class="card-body">
-<div class="form-group"><label class="form-label">扫描范围</label><select class="form-select"><option>全部数据库</option><option>Oracle</option><option>MySQL</option></select></div>
-<div class="form-group"><label class="form-label">扫描类型</label><div style="display:flex;gap:20px"><label><input type="checkbox" checked>弱密码检测</label><label><input type="checkbox" checked>权限审计</label><label><input type="checkbox" checked>漏洞扫描</label></div></div>
 </div>
 </div>
 </div>
@@ -327,64 +263,211 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 <div class="card-header"><span class="card-title">系统配置</span><button class="btn btn-primary" onclick="saveConfig()">保存配置</button></div>
 <div class="card-body">
 <div class="form-group"><label class="form-label">通知设置</label>
-<div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)"><span>钉钉通知</span><div class="toggle-switch active"></div></div>
-<div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)"><span>邮件通知</span><div class="toggle-switch active"></div></div>
-<div style="display:flex;justify-content:space-between;padding:12px 0"><span>企业微信</span><div class="toggle-switch"></div></div>
+<div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)"><span>钉钉通知</span><div class="toggle-switch active" onclick="this.classList.toggle('active')"></div></div>
+<div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)"><span>邮件通知</span><div class="toggle-switch active" onclick="this.classList.toggle('active')"></div></div>
+<div style="display:flex;justify-content:space-between;padding:12px 0"><span>企业微信</span><div class="toggle-switch" onclick="this.classList.toggle('active')"></div></div>
 </div>
 </div>
 </div>
-</div>
-</div>
-</div>
-<!-- Modal -->
-<div class="modal" id="addDbModal">
-<div class="modal-content">
-<div class="modal-header"><h3 class="modal-title">添加数据库</h3><button class="modal-close" onclick="closeModal()">&times;</button></div>
-<div class="modal-body">
-<div class="form-group"><label class="form-label">数据库类型</label><select class="form-select"><option>Oracle</option><option>MySQL</option><option>PostgreSQL</option></select></div>
-<div class="form-group"><label class="form-label">连接名称</label><input type="text" class="form-input" placeholder="例如: Oracle生产"></div>
-<div class="form-group"><label class="form-label">主机地址</label><input type="text" class="form-input" placeholder="192.168.1.100"></div>
-<div class="form-group"><label class="form-label">端口</label><input type="text" class="form-input" placeholder="1521"></div>
-</div>
-<div class="modal-footer"><button class="btn btn-outline" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="addDb()">添加</button></div>
 </div>
 </div>
 <script>
+// API基础URL
+const API = '';
+
+// 加载数据
+async function loadData() {
+  await Promise.all([loadDashboard(), loadTasks(), loadAlerts(), loadDatabases(), loadChatHistory()]);
+}
+
+// 加载仪表盘
+async function loadDashboard() {
+  try {
+    const res = await fetch(API + '/api/databases');
+    const data = await res.json();
+    if (data.success) {
+      const dbs = data.data;
+      const stats = `
+<div class="stat" style="border-left:4px solid #f59e0b"><div class="stat-value">${dbs.filter(d=>d.type==='oracle').length}</div><div class="stat-label">Oracle</div></div>
+<div class="stat" style="border-left:4px solid #3b82f6"><div class="stat-value">${dbs.filter(d=>d.type==='mysql').length}</div><div class="stat-label">MySQL</div></div>
+<div class="stat" style="border-left:4px solid #8b5cf6"><div class="stat-value">${dbs.filter(d=>d.type==='postgresql').length}</div><div class="stat-label">PostgreSQL</div></div>
+<div class="stat" style="border-left:4px solid #ef4444"><div class="stat-value">${dbs.filter(d=>['redis','tidb','oceanbase'].includes(d.type)).length}</div><div class="stat-label">其他</div></div>`;
+      document.getElementById('dashboardStats').innerHTML = stats;
+    }
+  } catch (e) { document.getElementById('dashboardStats').innerHTML = '<div class="loading">加载失败，请启动后端服务</div>'; }
+}
+
+// 加载数据库列表
+async function loadDatabases() {
+  try {
+    const res = await fetch(API + '/api/databases');
+    const data = await res.json();
+    if (data.success) {
+      const icons = { oracle:'🐂', mysql:'🐬', postgresql:'🐘', redis:'🔴', tidb:'🐯', oceanbase:'🌊' };
+      const html = '<div class="db-grid">' + data.data.map(db => `
+<div class="db-card">
+<div class="db-header"><div class="db-icon ${db.type}">${icons[db.type]||'📦'}</div><div><div class="db-name">${db.name}</div><div class="db-version">${db.version} · ${db.mode}</div></div></div>
+<span class="badge ${db.status==='online'?'success':db.status==='warning'?'warning':'danger'}">${db.status==='online'?'在线':db.status==='warning'?'告警':'离线'}</span>
+<div class="db-metrics"><div class="metric"><div class="metric-value">${db.connections}</div><div class="metric-label">连接数</div></div><div class="metric"><div class="metric-value">${db.qps.toLocaleString()}</div><div class="metric-label">QPS</div></div></div>
+<div class="progress-wrap"><div class="progress-label"><span>CPU</span><span>${db.cpu}%</span></div><div class="progress"><div class="progress-bar ${db.cpu>80?'red':db.cpu>60?'yellow':'green'}" style="width:${db.cpu}%"></div></div>
+<div class="db-actions"><button class="btn btn-outline btn-sm" onclick="testConn('${db.id}')">测试</button><button class="btn btn-outline btn-sm" onclick="showQuery('${db.id}')">查询</button></div>
+</div>`).join('') + '</div>';
+      document.getElementById('dbList').innerHTML = html;
+      
+      // 更新SQL工具下拉
+      const sqlDbSelect = document.getElementById('sqlDb');
+      sqlDbSelect.innerHTML = data.data.map(db => `<option value="${db.id}">${db.name}</option>`).join('');
+    }
+  } catch (e) { document.getElementById('dbList').innerHTML = '<div class="loading">加载失败</div>'; }
+}
+
+// 加载任务
+async function loadTasks() {
+  try {
+    const res = await fetch(API + '/api/tasks');
+    const data = await res.json();
+    if (data.success) {
+      const html = data.data.map(t => `
+<div class="task-item"><div class="task-priority ${t.priority}"></div><div class="task-info"><div class="task-title">${t.title}</div><div class="task-meta">${t.expert} · 开始于 ${t.startTime}</div></div><span class="badge ${t.status==='running'?'info':t.status==='done'?'success':'warning'}">${t.status==='running'?'进行中':t.status==='done'?'已完成':'等待中'}</span></div>`).join('');
+      document.getElementById('taskList').innerHTML = html || '<div class="loading">暂无任务</div>';
+      document.getElementById('runningTasks').innerHTML = html || '<div class="loading">暂无运行中任务</div>';
+    }
+  } catch (e) { document.getElementById('taskList').innerHTML = '<div class="loading">加载失败</div>'; }
+}
+
+// 加载告警
+async function loadAlerts() {
+  try {
+    const res = await fetch(API + '/api/alerts');
+    const data = await res.json();
+    if (data.success) {
+      const icons = { critical:'🔴', warning:'🟡', info:'🔵' };
+      const html = data.data.map(a => `
+<div class="alert-item ${a.level}"><div class="alert-icon">${icons[a.level]}</div><div class="alert-content"><div class="alert-title">${a.title}</div><div class="alert-desc">${a.desc}</div><div class="alert-time">${a.time} · ${a.db}</div></div></div>`).join('');
+      document.getElementById('alertList').innerHTML = html || '<div class="loading">暂无告警</div>';
+      document.getElementById('dashboardAlerts').innerHTML = html || '<div class="loading">暂无告警</div>';
+    }
+  } catch (e) { document.getElementById('alertList').innerHTML = '<div class="loading">加载失败</div>'; }
+}
+
+// 加载监控
+async function loadMonitor() {
+  try {
+    const res = await fetch(API + '/api/monitor');
+    const data = await res.json();
+    if (data.success) {
+      const html = `<table class="table"><thead><tr><th>数据库</th><th>QPS</th><th>CPU</th><th>内存</th><th>磁盘</th><th>状态</th></tr></thead><tbody>` + 
+        data.data.map(db => `<tr><td>${db.name}</td><td>${db.qps.toLocaleString()}</td><td>${db.cpu}%</td><td>${db.memory}</td><td>${db.disk}</td><td><span class="badge ${db.status==='online'?'success':'warning'}">${db.status==='online'?'正常':'告警'}</span></td></tr>`).join('') + 
+        '</tbody></table>';
+      document.getElementById('monitorTable').innerHTML = html;
+    }
+  } catch (e) { document.getElementById('monitorTable').innerHTML = '<div class="loading">加载失败</div>'; }
+}
+
+// 加载聊天历史
+async function loadChatHistory() {
+  try {
+    const res = await fetch(API + '/api/chat/history');
+    const data = await res.json();
+    if (data.success && data.history) {
+      const html = data.history.map(m => `<div class="message ${m.role}"><div class="message-avatar"></div><div class="message-content"><div class="message-bubble">${m.content}</div></div></div>`).join('');
+      document.getElementById('chatMessages').innerHTML = html;
+    }
+  } catch (e) { console.log('加载聊天历史失败'); }
+}
+
+// 发送消息
+async function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+  
+  const msgs = document.getElementById('chatMessages');
+  msgs.innerHTML += `<div class="message user"><div class="message-avatar"></div><div class="message-content"><div class="message-bubble">${msg}</div></div></div>`;
+  input.value = '';
+  msgs.scrollTop = msgs.scrollHeight;
+  
+  try {
+    const res = await fetch(API + '/api/chat', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({message: msg})
+    });
+    const data = await res.json();
+    if (data.success) {
+      msgs.innerHTML += `<div class="message ai"><div class="message-avatar"></div><div class="message-content"><div class="message-bubble">${data.response}</div></div></div>`;
+      msgs.scrollTop = msgs.scrollHeight;
+    }
+  } catch (e) { alert('发送失败'); }
+}
+
+// 测试连接
+async function testConn(id) {
+  try {
+    const res = await fetch(API + '/api/test?id=' + id);
+    const data = await res.json();
+    alert(data.message);
+  } catch (e) { alert('测试失败'); }
+}
+
+// 显示SQL查询
+function showQuery(id) {
+  switchPage('sql');
+  document.getElementById('sqlDb').value = id;
+}
+
+// 执行SQL
+async function executeSql() {
+  const db = document.getElementById('sqlDb').value;
+  const sql = document.getElementById('sqlInput').value.trim();
+  if (!sql) { alert('请输入SQL'); return; }
+  
+  document.getElementById('sqlResult').textContent = '执行中...';
+  try {
+    const res = await fetch(API + '/api/sql/execute', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({database: db, sql})
+    });
+    const data = await res.json();
+    if (data.success) {
+      let result = `执行成功 (${data.executionTime})\n影响行数: ${data.affectedRows}\n\n`;
+      if (data.columns) {
+        result += data.columns.join(' | ') + '\n' + data.columns.map(()=>'---').join(' | ') + '\n';
+        result += data.rows.map(r=>r.join(' | ')).join('\n');
+      }
+      document.getElementById('sqlResult').textContent = result;
+    }
+  } catch (e) { document.getElementById('sqlResult').textContent = '执行失败: ' + e.message; }
+}
+
+// 页面切换
 document.querySelectorAll('.nav-item').forEach(n=>n.addEventListener('click',function(){
-document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
-document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
-this.classList.add('active');
-document.getElementById(this.dataset.page).classList.add('active');
-document.getElementById('pageTitle').textContent=this.textContent;
+  document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  this.classList.add('active');
+  document.getElementById(this.dataset.page).classList.add('active');
+  document.getElementById('pageTitle').textContent=this.textContent;
 }));
 function switchPage(p){
-document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
-document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
-document.querySelector('[data-page="'+p+'"]').classList.add('active');
-document.getElementById(p).classList.add('active');
-document.getElementById('pageTitle').textContent=document.querySelector('[data-page="'+p+'"]').textContent;
+  document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  document.querySelector('[data-page="'+p+'"]').classList.add('active');
+  document.getElementById(p).classList.add('active');
+  document.getElementById('pageTitle').textContent=document.querySelector('[data-page="'+p+'"]').textContent;
 }
-function sendMessage(){
-var m=document.getElementById('chatInput').value;
-if(!m)return;
-var msgs=document.getElementById('chatMessages');
-msgs.innerHTML+='<div class="message user"><div class="message-avatar"></div><div class="message-content"><div class="message-bubble">'+m+'</div></div></div>';
-setTimeout(function(){
-var r='收到你的问题！让我分析一下...';
-msgs.innerHTML+='<div class="message ai"><div class="message-avatar"></div><div class="message-content"><div class="message-bubble">'+r+'</div></div></div>';
-msgs.scrollTop=msgs.scrollHeight;
-},1000);
-document.getElementById('chatInput').value='';
+
+// 快捷操作
+function quickAction(t) {
+  const msgs = { inspection: '正在执行巡检任务...', report: '正在生成报告...' };
+  alert(msgs[t] || '功能: ' + t);
 }
-function showAddDb(){document.getElementById('addDbModal').classList.add('show');}
-function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.remove('show'));}
-function addDb(){alert('数据库添加成功');closeModal();}
-function saveConfig(){alert('配置已保存');}
-function quickAction(t){alert('功能: '+t);}
-function refreshAll(){alert('刷新成功');}
-function showNewTask(){alert('新建任务');}
-function executeSql(){alert('SQL执行成功');}
-document.querySelectorAll('.toggle-switch').forEach(t=>t.addEventListener('click',function(){this.classList.toggle('active');}));
+
+function saveConfig() { alert('配置已保存'); }
+
+// 初始化
+loadData();
+loadMonitor();
 </script>
 </body>
 </html>
