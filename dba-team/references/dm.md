@@ -4,6 +4,7 @@
 
 - **官网**: https://dameng.com/
 - **官方文档**: https://eco.dameng.com/document/dm/zh-cn/start/index.html
+- **文档下载**: https://dameng.com/download/document.html
 - **社区问答**: https://eco.dameng.com/community/question
 - **达梦开发者社区**: https://eco.dameng.com/
 
