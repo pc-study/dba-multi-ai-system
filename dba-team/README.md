@@ -6,11 +6,13 @@
 
 ## 特性
 
-- 🤖 **多专家协作** - 14种数据库专家，满足各种数据库需求
+- 🤖 **多专家协作** - 17种数据库专家，满足各种数据库需求
 - 🧠 **记忆机制** - 记住用户环境配置和历史任务
 - 📚 **知识库** - 内置14个常用数据库的官方文档索引
 - ⚙️ **自动化工作流** - 支持定时巡检、健康报告等自动化任务
 - 🔄 **横向协作** - 跨库任务自动协调多专家讨论
+- 🌐 **Web管理界面** - 可视化管理数据库和任务
+- 📊 **实时监控** - 连接数、QPS、CPU等监控指标
 
 ## 支持的数据库
 
@@ -40,211 +42,104 @@
 | Redis | ✅ |
 | ClickHouse | ✅ |
 
-## 团队架构
+## Web管理界面
+
+提供完整的Web界面进行可视化管理：
 
 ```
-DBA总监 (主Agent)
-    ├── Oracle专家
-    ├── MySQL专家
-    ├── PostgreSQL专家
-    ├── SQL Server专家
-    ├── 达梦专家
-    ├── 崖山专家
-    ├── 金仓专家
-    ├── OceanBase专家
-    ├── PolarDB专家
-    ├── TiDB专家
-    ├── TDSQL专家
-    ├── MongoDB专家
-    ├── Redis专家
-    ├── ClickHouse专家
-    └── 通用DBA助手
+http://localhost:8080
 ```
+
+### 功能模块
+
+| 模块 | 功能 |
+|------|------|
+| 📊 仪表盘 | 统计概览、最近任务、快捷操作 |
+| 💬 AI对话 | 直接与AI助手交互 |
+| 🗄️ 数据库 | 列表、详情、测试连接、SQL查询、添加 |
+| 📈 实时监控 | 连接数、QPS、CPU、内存监控 |
+| 📋 任务中心 | 任务列表、状态筛选 |
+| 🔔 告警中心 | 告警列表、已读标记 |
+| ⚙️ 系统配置 | 通知渠道、数据库连接、自动化设置 |
 
 ## 安装
 
-### 方式1：ClawHub安装（推荐 ✅）
+### 方式1：通过ClawHub安装（推荐）
 
 ```bash
-# 安装
 clawhub install dba-team
-
-# 更新
-clawhub update dba-team
 ```
-
-> 需要先登录: `clawhub login`
 
 ### 方式2：Git克隆
 
 ```bash
-# 克隆仓库
 git clone https://github.com/pc-study/dba-multi-ai-system.git
-
-# 复制到OpenClaw skills目录
 cp -r dba-team ~/.openclaw/skills/
 ```
 
-### 方式3：符号链接（开发用）
+### 启动Web界面
 
 ```bash
-# 克隆仓库
-git clone https://github.com/pc-study/dba-multi-ai-system.git
-
-# 创建符号链接
-ln -s dba-team ~/.openclaw/skills/dba-team
+cd dba-team/web
+python -m http.server 8080
+# 访问 http://localhost:8080
 ```
 
-## 使用方式
+## 配置功能
 
-### 在OpenClaw中直接对话
+### 工具集成
+- SSH远程连接
+- 数据库SQL执行
+- 连接测试
 
-```
-用户: Oracle ADG怎么搭建？
-       ↓
-DBA总监分析任务 → 分发给Oracle专家
-       ↓
-Oracle专家输出完整方案
-```
+### 告警通知
+- 钉钉机器人
+- 企业微信
+- 邮件通知
 
-### 任务分发示例
-
-| 用户请求 | 分发专家 | 协作方式 |
-|---------|---------|---------|
-| Oracle性能优化 | Oracle专家 | 单独处理 |
-| MySQL主从延迟 | MySQL专家 | 单独处理 |
-| Oracle迁MySQL | Oracle + MySQL | 横向协作 |
-| 巡检所有库 | 全部专家 | 并行执行 |
-
-### 横向协作示例
-
-```
-用户: 把Oracle的数据迁移到MySQL怎么做？
-
-DBA总监:
-→ 分发给Oracle专家（源库分析）
-→ 分发给MySQL专家（目标库准备）
-→ 协调两位专家讨论迁移方案
-→ 汇总最终迁移方案
-```
+### 自动化
+- 定时巡检（每日6:00）
+- 备份验证（每日2:00）
+- 周报生成（每周一8:00）
 
 ## 项目结构
 
 ```
 dba-team/
-├── SKILL.md                    # Skill定义
-├── memory.md                   # 记忆机制说明
-├── workflows.md               # 自动化工作流配置
-├── prompts/                   # 专家Prompt
-│   ├── dba-director.md        # DBA总监
-│   ├── oracle-expert.md       # Oracle专家
-│   ├── mysql-expert.md        # MySQL专家
-│   ├── postgresql-expert.md   # PostgreSQL专家
-│   ├── sqlserver-expert.md    # SQL Server专家
-│   ├── dm-expert.md          # 达梦专家
-│   ├── yashan-expert.md      # 崖山专家
-│   ├── kingbase-expert.md    # 金仓专家
-│   ├── oceanbase-expert.md   # OceanBase专家
-│   ├── polardb-expert.md     # PolarDB专家
-│   ├── tidb-expert.md        # TiDB专家
-│   ├── tdsql-expert.md       # TDSQL专家
-│   ├── mongodb-expert.md     # MongoDB专家
-│   ├── redis-expert.md       # Redis专家
-│   ├── clickhouse-expert.md  # ClickHouse专家
-│   └── dba-assistant.md      # 通用助手
-└── references/                # 知识库
-    ├── oracle.md             # Oracle文档
-    ├── mysql.md              # MySQL文档
-    ├── postgresql.md         # PostgreSQL文档
-    ├── oceanbase.md          # OceanBase文档
-    ├── tidb.md               # TiDB文档
-    ├── redis.md              # Redis文档
-    ├── mongodb.md            # MongoDB文档
-    ├── clickhouse.md         # ClickHouse文档
-    └── README.md             # 知识库说明
+├── SKILL.md              # Skill定义
+├── prompts/              # 17个专家Prompt
+│   ├── oracle-expert.md
+│   ├── mysql-expert.md
+│   └── ...
+├── references/          # 知识库（14个数据库文档）
+├── config/              # 配置文件
+│   ├── tools.json
+│   ├── notification.json
+│   ├── nl2sql.json
+│   └── ...
+├── memory/              # 记忆存储
+├── web/                 # Web管理界面
+│   └── index.html
+└── deploy/              # 部署配置
+    └── README.md
 ```
 
-## 知识库
+## 与其他方案对比
 
-已整理14个常用数据库的官方文档链接：
+| 对比项 | DBA多AI系统 | 传统搜索引擎 | 单一AI助手 |
+|--------|------------|------------|-----------|
+| 专业性 | ✅ 17个数据库专家 | ❌ 需要自己筛选 | ❌ 不够深入 |
+| 协作能力 | ✅ 多专家会诊 | ❌ 无 | ❌ 无 |
+| 记忆能力 | ✅ 记住你的环境 | ❌ 无 | ❌ 弱 |
+| 知识库 | ✅ 内置官方文档 | ❌ 需要自己查 | ❌ 无 |
+| Web界面 | ✅ 可视化 | ❌ 无 | ❌ 无 |
 
-```
-references/
-├── oracle.md             # Oracle文档
-├── mysql.md              # MySQL文档
-├── postgresql.md         # PostgreSQL文档
-├── sqlserver.md          # SQL Server文档
-├── dm.md                 # 达梦文档
-├── yashan.md             # 崖山文档
-├── kingbase.md           # 金仓文档
-├── oceanbase.md          # OceanBase文档
-├── polardb.md            # PolarDB文档
-├── tidb.md               # TiDB文档
-├── tdsql.md              # TDSQL文档
-├── mongodb.md            # MongoDB文档
-├── redis.md              # Redis文档
-└── clickhouse.md         # ClickHouse文档
-```
+## 相关链接
 
-```bash
-# 使用示例
-用户: MySQL 8.0有什么新特性？
-    ↓
-读取 references/mysql.md
-    ↓
-返回MySQL 8.0版本特性和文档链接
-```
-
-## 记忆机制
-
-自动记住用户的环境和偏好：
-
-- **环境信息** - 用户有哪些数据库
-- **历史任务** - 过去处理过的任务
-- **用户偏好** - 常用的配置和设置
-
-## 自动化工作流
-
-支持定时任务：
-
-| 工作流 | 频率 | 内容 |
-|-------|------|------|
-| 定时巡检 | 每天 | 连接数、空间、慢查询 |
-| 性能监控 | 实时 | QPS、资源使用 |
-| 健康报告 | 每周 | 整体评分、趋势分析 |
-
-## 扩展开发
-
-### 添加新专家
-
-1. 在 `prompts/` 创建新专家Prompt
-2. 在 `SKILL.md` 添加分发规则
-3. 在 `references/` 添加文档链接
-
-### 示例：添加SQLite专家
-
-```bash
-# 1. 创建Prompt
-echo "# SQLite专家..." > prompts/sqlite-expert.md
-
-# 2. 添加分发规则
-# 在 SKILL.md 的任务分发规则中添加:
-# sqlite → SQLite专家
-```
-
-## 贡献
-
-欢迎提交 Issue 和 Pull Request！
+- 📦 GitHub：https://github.com/pc-study/dba-multi-ai-system
+- 🔗 ClawHub：https://clawhub.ai/pc-study/dba-team
+- 📖 OpenClaw：https://openclaw.ai
 
 ## License
 
 MIT License
-
-## 作者
-
-- GitHub: [@pc-study](https://github.com/pc-study)
-
-## 相关链接
-
-- [OpenClaw](https://github.com/openclaw/openclaw)
-- [Minimax](https://minimax.cn)
