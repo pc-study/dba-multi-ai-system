@@ -145,6 +145,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 </div>
 <div class="nav-section"><div class="nav-section-title">工具</div>
 <div class="nav-item" data-page="sql">SQL工具</div>
+<div class="nav-item" data-page="config">系统配置</div>
+<div class="nav-item" data-page="config">系统配置</div>
 </div>
 </div>
 <div class="main">
@@ -202,6 +204,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 </div></div></div>
 </div>
 </div>
+<!-- Config -->
+<div class="page" id="config">
+<div class="card">
+<div class="card-header"><span class="card-title">系统配置</span></div>
+<div class="card-body">
+<div class="form-group"><label class="form-label">MiniMax API Key</label><input type="password" class="form-input" id="apiKey" placeholder="填写你的API Key"></div>
+<div class="form-group"><label class="form-label">API地址</label><input type="text" class="form-input" id="apiUrl" value="https://api.minimaxi.com/v1/text/chatcompletion_v2"></div>
+<div class="form-group"><button class="btn btn-primary" onclick="saveApiConfig()">保存配置</button> <button class="btn btn-outline" onclick="testChat()">测试对话</button></div>
+</div></div>
+</div>
+</div></div>
 <!-- DB Modal -->
 <div class="modal" id="dbModal">
 <div class="modal-content">
@@ -441,6 +454,35 @@ function switchPage(p){
 
 function closeModal(){document.querySelectorAll('.modal').forEach(m=>m.classList.remove('show'));}
 function quickAction(t){showToast(t==='inspection'?'正在巡检...':'正在生成报告...');}
+
+async function saveApiConfig() {
+  const apiKey = document.getElementById('apiKey').value;
+  const apiUrl = document.getElementById('apiUrl').value;
+  try {
+    const res = await fetch(API + '/api/config/save', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({apiKey, apiUrl})
+    });
+    const data = await res.json();
+    if (data.success) { showToast('配置已保存，现在可以测试AI对话'); }
+    else { showToast('保存失败', 'error'); }
+  } catch (e) { showToast('保存失败: ' + e.message, 'error'); }
+}
+
+async function testChat() {
+  const res = await fetch(API + '/api/chat', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({message: '你好，请介绍一下你自己'})
+  });
+  const data = await res.json();
+  if (data.success) {
+    showToast('AI响应: ' + (data.real ? '✅ 真实API' : '⚠️ 模拟响应'));
+  } else {
+    showToast('测试失败', 'error');
+  }
+}
 loadData();loadMonitor();
 </script>
 </body>
