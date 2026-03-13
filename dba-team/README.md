@@ -82,7 +82,7 @@ clawhub update dba-team
 git clone https://github.com/pc-study/dba-multi-ai-system.git
 
 # 复制到OpenClaw skills目录
-cp -r dba-team ~/.npm-global/lib/node_modules/openclaw/skills/
+cp -r dba-team ~/.openclaw/skills/
 ```
 
 ### 方式3：符号链接（开发用）
@@ -92,7 +92,7 @@ cp -r dba-team ~/.npm-global/lib/node_modules/openclaw/skills/
 git clone https://github.com/pc-study/dba-multi-ai-system.git
 
 # 创建符号链接
-ln -s dba-team ~/.npm-global/lib/node_modules/openclaw/skills/dba-team
+ln -s dba-team ~/.openclaw/skills/dba-team
 ```
 
 ## 使用方式
