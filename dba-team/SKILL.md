@@ -1,6 +1,7 @@
 ---
 name: dba-team
-description: DBA多AI协作系统。用于处理数据库相关的所有DBA工作，包括架构设计、日常运维、故障排查、性能优化、数据迁移等。支持Oracle、MySQL、PostgreSQL、SQL Server及国产数据库（达梦、崖山、金仓、OceanBase、PolarDB、TiDB、TDSQL），以及MongoDB、Redis、ClickHouse。当用户提出任何数据库相关需求时触发此Skill。
+version: 1.0.0
+description: 🤖 基于OpenClaw的多AI数据库专家团队，模拟真实DBA团队工作方式。支持17种数据库专家（Oracle/MySQL/PG/达梦/OceanBase/TiDB等）+ 安全专家 + 架构师 + 培训师。具备智能记忆、知识库、自动化巡检等能力。解决各种数据库难题！
 ---
 
 # DBA多AI协作系统
