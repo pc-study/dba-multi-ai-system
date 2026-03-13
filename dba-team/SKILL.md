@@ -1,7 +1,7 @@
 ---
 name: dba-team
 version: 1.0.0
-description: 🤖 基于OpenClaw的多AI数据库专家团队，模拟真实DBA团队工作方式。支持17种数据库专家（Oracle/MySQL/PG/达梦/OceanBase/TiDB等）+ 安全专家 + 架构师 + 培训师。具备智能记忆、知识库、自动化巡检等能力。解决各种数据库难题！
+description: 🤖 基于OpenClaw的多AI数据库专家团队。支持20种数据库+自然语言转SQL+K8s部署。提供Web界面、告警通知、工具箱、报表生成等完整功能。解决各种数据库难题！
 ---
 
 # DBA多AI协作系统
@@ -18,6 +18,22 @@ DBA总监 (主Agent)
     ├── SQL Server专家
     ├── 达梦(DM)专家
     ├── 崖山(YashanDB)专家
+    ├── 金仓(Kingbase)专家
+    ├── OceanBase专家
+    ├── PolarDB专家
+    ├── TiDB专家
+    ├── TDSQL专家
+    ├── MongoDB专家
+    ├── Redis专家
+    ├── ClickHouse专家
+    ├── Elasticsearch专家   ⭐新增
+    ├── Cassandra专家       ⭐新增
+    ├── GreenPlum专家      ⭐新增
+    ├── 安全专家
+    ├── 架构师
+    ├── 培训师
+    └── 通用DBA助手
+```
     ├── 金仓(Kingbase)专家
     ├── OceanBase专家
     ├── PolarDB专家
@@ -259,3 +275,68 @@ DBA助手执行巡检任务
     ↓
 测试告警发送
 ```
+
+## 自然语言转SQL ⭐新增
+
+将自然语言转换为SQL语句，配置在 `config/nl2sql.json`
+
+### 支持的数据库
+| 数据库 | 状态 |
+|--------|------|
+| MySQL | ✅ |
+| PostgreSQL | ✅ |
+| Oracle | ✅ |
+| SQL Server | ✅ |
+
+### 使用示例
+```
+用户: 查询工资大于10000的员工
+    ↓
+生成: SELECT * FROM employees WHERE salary > 10000;
+
+用户: 创建一个用户表
+    ↓
+生成: CREATE TABLE users (...)
+```
+
+## 图形化界面 ⭐新增
+
+提供Web界面管理，配置在 `web/`
+
+### 功能模块
+- 仪表盘（任务统计、告警概览）
+- 数据库管理（连接配置、状态监控）
+- 任务中心（任务列表、历史记录）
+- 配置管理（通知设置、工具配置）
+
+### 启动方式
+```bash
+cd web
+python -m http.server 8080
+# 访问 http://localhost:8080
+```
+
+## 云原生部署 ⭐新增
+
+支持Docker和Kubernetes部署，配置在 `deploy/`
+
+### 部署方式
+| 方式 | 说明 |
+|------|------|
+| Docker | 单容器部署 |
+| Docker Compose | 多服务编排 |
+| Kubernetes | K8s部署 |
+| Helm | Helm Chart |
+
+### 使用示例
+```bash
+# Docker
+docker run -d -p 8080:8080 dba-team:latest
+
+# Kubernetes
+kubectl apply -f deploy/k8s/
+```
+
+## 知识库
+
+各数据库官方文档位于 `references/` 目录。

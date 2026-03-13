@@ -1,0 +1,9 @@
+{
+  "enabled": true,
+  "default_db": "mysql",
+  "options": {
+    "format": true,
+    "comment": true,
+    "explain": true
+  }
+}
