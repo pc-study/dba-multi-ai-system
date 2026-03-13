@@ -22,9 +22,12 @@ DBA总监 (主Agent)
     ├── PolarDB专家
     ├── TiDB专家
     ├── TDSQL专家
-    ├── MongoDB专家      ⭐新增
-    ├── Redis专家        ⭐新增
-    ├── ClickHouse专家   ⭐新增
+    ├── MongoDB专家
+    ├── Redis专家
+    ├── ClickHouse专家
+    ├── 安全专家        ⭐新增
+    ├── 架构师          ⭐新增
+    ├── 培训师          ⭐新增
     └── 通用DBA助手
 ```
 
@@ -77,6 +80,9 @@ DBA总监 (主Agent)
 | redis | Redis专家 ⭐ |
 | clickhouse, ck | ClickHouse专家 ⭐ |
 | 巡检, 报告, 监控 | 通用DBA助手 |
+| 安全, 加固, 审计, 漏洞 | 安全专家 ⭐ |
+| 架构, 选型, 设计, 规划 | 架构师 ⭐ |
+| 培训, 学习, 教学, 认证 | 培训师 ⭐ |
 
 ## 横向协作场景
 
