@@ -2,34 +2,34 @@
 
 ## 官方资源
 
-- **官方文档**: https://oceanbase.com/docs/
+- **官方文档**: https://www.oceanbase.com/docs/
 - **OB社区**: https://open.oceanbase.com/
 - **开发者中心**: https://oceanbase.dev/
 
 ## 版本文档
 
-- **OceanBase 4.x**: https://oceanbase.com/docs/oceanbase-database/V4.0.0/
-- **OceanBase 3.x**: https://oceanbase.com/docs/oceanbase-database/V3.1.0/
+- **OceanBase 4.x**: https://www.oceanbase.com/docs/oceanbase-database/
+- **OceanBase 3.x**: https://www.oceanbase.com/docs/oceanbase-database/
 
 ## 常用链接
 
 ### OCP运维
-- OCP控制台: https://oceanbase.com/docs/oceanbase-cloud-manager/
+- OCP控制台: https://www.oceanbase.com/docs/oceanbase-cloud-manager/
 
 ### 性能优化
-- SQL调优: https://oceanbase.com/docs/oceanbase-database/V4.0.0/1000-10000
-- 执行计划: https://oceanbase.com/docs/oceanbase-database/V4.0.0/1000-10000
+- SQL调优: https://www.oceanbase.com/docs/oceanbase-database/
+- 执行计划: https://www.oceanbase.com/docs/oceanbase-database/
 
 ### 分布式特性
-- 租户管理: https://oceanbase.com/docs/oceanbase-database/V4.0.0/500-1000
-- 分区表: https://oceanbase.com/docs/oceanbase-database/V4.0.0/300-1000
-- 全局索引: https://oceanbase.com/docs/oceanbase-database/V4.0.0/300-1000
+- 租户管理: https://www.oceanbase.com/docs/oceanbase-database/
+- 分区表: https://www.oceanbase.com/docs/oceanbase-database/
+- 全局索引: https://www.oceanbase.com/docs/oceanbase-database/
 
 ## 常用工具
 
-- ob_admin: https://oceanbase.com/docs/oceanbase-database/V4.0.0/1406-1000
-- OBD: https://github.com/oceanbase/obdeploy
-- OMS: https://oceanbase.com/docs/oceanbase-migration-service/
+- ob_admin: 集群管理工具
+- OBD: 部署工具 - https://github.com/oceanbase/obdeploy
+- OMS: 迁移工具 - https://www.oceanbase.com/docs/oceanbase-migration-service/
 
 ## 版本特性速查
 
