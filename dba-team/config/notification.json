@@ -1,0 +1,29 @@
+{
+  "enabled": false,
+  "channels": {
+    "dingtalk": {
+      "enabled": false,
+      "webhook": "",
+      "secret": ""
+    },
+    "wechat": {
+      "enabled": false,
+      "webhook": ""
+    },
+    "email": {
+      "enabled": false,
+      "smtp": {
+        "host": "",
+        "port": 465,
+        "user": "",
+        "password": ""
+      },
+      "to": []
+    }
+  },
+  "triggers": {
+    "critical": true,
+    "warning": true,
+    "info": false
+  }
+}

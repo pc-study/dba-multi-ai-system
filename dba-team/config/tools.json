@@ -1,0 +1,17 @@
+{
+  "ssh": {
+    "enabled": false,
+    "connections": {}
+  },
+  "database": {
+    "oracle": {
+      "connections": {}
+    },
+    "mysql": {
+      "connections": {}
+    },
+    "postgresql": {
+      "connections": {}
+    }
+  }
+}
