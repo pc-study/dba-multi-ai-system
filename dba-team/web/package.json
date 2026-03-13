@@ -12,6 +12,7 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "crypto-js": "^4.2.0",
     "mysql2": "^3.19.1",
     "pg": "^8.20.0"
   }
