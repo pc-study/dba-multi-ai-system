@@ -1,0 +1,47 @@
+{
+  "databases": [
+    {
+      "id": "oracle1",
+      "name": "Oracle生产库",
+      "type": "oracle",
+      "version": "19.29.0",
+      "mode": "2节点RAC",
+      "ip": "192.168.1.100",
+      "port": 1521,
+      "user": "system",
+      "password": "",
+      "serviceName": "orcl",
+      "status": "online"
+    },
+    {
+      "id": "mysql1",
+      "name": "MySQL生产库",
+      "type": "mysql",
+      "version": "8.0.32",
+      "mode": "MGR集群",
+      "ip": "192.168.1.101",
+      "port": 3306,
+      "user": "root",
+      "password": "",
+      "database": "mysql",
+      "status": "online"
+    },
+    {
+      "id": "pg1",
+      "name": "PostgreSQL",
+      "type": "postgresql",
+      "version": "15.4",
+      "mode": "主从复制",
+      "ip": "192.168.1.102",
+      "port": 5432,
+      "user": "postgres",
+      "password": "",
+      "database": "postgres",
+      "status": "warning"
+    }
+  ],
+  "alerts": [
+    { "level": "critical", "title": "Oracle生产库连接数告警", "desc": "当前连接数 195/200 (97.5%)", "db": "Oracle" },
+    { "level": "warning", "title": "PG表空间使用率超标", "desc": "使用率 85%，超过阈值 80%", "db": "PostgreSQL" }
+  ]
+}
