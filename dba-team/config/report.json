@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "formats": ["markdown", "html"],
+  "templates": {
+    "inspection": true,
+    "performance": true,
+    "health": true,
+    "backup": true
+  },
+  "output": {
+    "path": "./reports/",
+    "naming": "{type}_{date}"
+  }
+}

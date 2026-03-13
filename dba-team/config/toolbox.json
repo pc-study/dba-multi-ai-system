@@ -1,0 +1,11 @@
+{
+  "enabled": true,
+  "tools": {
+    "formatter": true,
+    "json": true,
+    "diff": true,
+    "timestamp": true,
+    "datatype": true,
+    "password": true
+  }
+}
