@@ -6,9 +6,9 @@
 
 ## 特性
 
-- 🤖 **多专家协作** - 16种数据库专家，满足各种数据库需求
+- 🤖 **多专家协作** - 14种数据库专家，满足各种数据库需求
 - 🧠 **记忆机制** - 记住用户环境配置和历史任务
-- 📚 **知识库** - 内置9个常用数据库的官方文档索引
+- 📚 **知识库** - 内置14个常用数据库的官方文档索引
 - ⚙️ **自动化工作流** - 支持定时巡检、健康报告等自动化任务
 - 🔄 **横向协作** - 跨库任务自动协调多专家讨论
 
@@ -154,7 +154,25 @@ dba-team/
 
 ## 知识库
 
-已整理9个常用数据库的官方文档链接：
+已整理14个常用数据库的官方文档链接：
+
+```
+references/
+├── oracle.md             # Oracle文档
+├── mysql.md              # MySQL文档
+├── postgresql.md         # PostgreSQL文档
+├── sqlserver.md          # SQL Server文档
+├── dm.md                 # 达梦文档
+├── yashan.md             # 崖山文档
+├── kingbase.md           # 金仓文档
+├── oceanbase.md          # OceanBase文档
+├── polardb.md            # PolarDB文档
+├── tidb.md               # TiDB文档
+├── tdsql.md              # TDSQL文档
+├── mongodb.md            # MongoDB文档
+├── redis.md              # Redis文档
+└── clickhouse.md         # ClickHouse文档
+```
 
 ```bash
 # 使用示例
